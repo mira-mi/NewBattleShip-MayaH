@@ -152,6 +152,7 @@
     <ClInclude Include="NewBattleShip-MayaH.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ship.h" />
+    <ClInclude Include="time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

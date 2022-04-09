@@ -18,6 +18,8 @@ public:
 	Player& operator=(const Player& p);
 	bool operator==(const Player& rhs);
 	bool operator !=(const Player&);
+	char p1;
+	char p2;
 private:
 	Board playerBoard;
 	std::string playerType = "";

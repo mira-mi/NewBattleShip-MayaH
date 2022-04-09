@@ -6,6 +6,10 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
+#include <CodeAnalysis/sourceannotations.h>
+#include <string>
+
+
 
 using namespace std;
 
@@ -13,8 +17,8 @@ Player nullPlayer(-1);
 const int speed1 = 0;
 const int speed2 = 1;
 Player& Game::getPlayer(int id) {
-    if (id == 1) { return p1; }
-    else if (id == 2) { return p2; }
+    if (id == 1) { return player1; }
+    else if (id == 2) { return player2; }
     else {
         std::cout << "error getting player\n";
         return nullPlayer;
@@ -48,6 +52,9 @@ void Game::fire(Player& playerBeingAttacked, int attackX, int attackY) {
                     std::cout << "Player " << playerBeingAttacked.getID() << "'s " << shipStoredInArray->getName() << " SUNK!\n";
                 }
             }
+            else if (shipStoredInArray->getSize() == 0.5) {
+                std::cout << "NEAR MISS!\n";
+            }
             else {
                 std::cout << "MISS!\n";
             }
@@ -61,7 +68,8 @@ void Game::fire(Player& playerBeingAttacked, int attackX, int attackY) {
 //two gamemode's
 //1 = human vs cpu
 //2 = cpu vs cpu
-Game::Game() {
+Game::Game() 
+{
     int gamemode;
     std::cout << border;
     std::cout << "Gamemodes:\n1. Player vs. CPU\n2. CPU vs. CPU\n";
@@ -69,23 +77,23 @@ Game::Game() {
     std::cout << "Please select a gamemode (1/2):\n: ";
     std::cin >> gamemode;
 
-    p1.setID(1);
-    p2.setID(2);
-    p1.setTurn(true);
-    p2.getBoard().randomizeFleet();
-    p2.setPlayerType("cpu");
+    player1.setID(1);
+    player2.setID(2);
+    player1.setTurn(true);
+    player2.getBoard().randomizeFleet();
+    player2.setPlayerType("cpu");
 
     std::cout << "---------------------------------------------------------\nGAME STARTED\n";
     std::string startLoc, endLoc;
     int x1, y1, x2, y2, shipNumber;
     char choice;
 
-    if (gamemode == 1) { p1.setPlayerType("human"); }
-    else if (gamemode == 2) { p1.setPlayerType("cpu"); }
+    if (gamemode == 1) { player1.setPlayerType("human"); }
+    else if (gamemode == 2) { player1.setPlayerType("cpu"); }
     else { std::cout << "invalid gamemode\n"; return; }
 
     //place if human
-    if (p1.getPlayerType() == "human") {
+    if (player1.getPlayerType() == "human") {
         //place ships
         std::cout << "Player 1, please place your ships.\n";
         std::cout << border;
@@ -95,12 +103,12 @@ Game::Game() {
         std::cin >> choice;
         std::cout << border;
         if (choice != 'r') {
-            while (!p1.getBoard().allShipsPlaced()) {
+            while (!player1.getBoard().allShipsPlaced()) {
                 //print reamining ships
                 //print board
                 std::cout << "p1's current board:\n";
-                p1.getBoard().printBoard();
-                p1.getBoard().printRemainingShips();
+                player1.getBoard().printBoard();
+                player1.getBoard().printRemainingShips();
 
                 std::cout << "Please enter ship number to place:\nShip Number: ";
                 std::cin >> shipNumber;
@@ -115,23 +123,23 @@ Game::Game() {
                 y2 = std::stoi(endLoc.substr(1, 1));
 
                 //place ship
-                p1.getBoard().setShip(shipNumber, x1, y1, x2, y2);
+                player1.getBoard().setShip(shipNumber, x1, y1, x2, y2);
             }
         }
-        else if (choice == 'r') { p1.getBoard().randomizeFleet(); }
+        else if (choice == 'r') { player1.getBoard().randomizeFleet(); }
         else { std::cout << "invalid option\n"; return; }
     }
     //computer player
     else {
         srand(static_cast<unsigned int>(time(NULL)));
-        sleep(1);
-        p1.getBoard().randomizeFleet();
+        usleep(1);
+        player1.getBoard().randomizeFleet();
         std::cout << "CPU Player: Ships Randomly Placed\n";
         std::cout << border;
     }
 
-    Player currPlayer = p1;
-    Player nextPlayer = p2;
+    Player currPlayer = player1;
+    Player nextPlayer = player2;
     Player tmpPlayer;
     int option;
     std::string attackCoord;
