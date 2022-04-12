@@ -15,6 +15,7 @@ int main()
 }
 
 // code tweaked and changed to match the standard of the project https://codereview.stackexchange.com
+// code was reimagined and fixed to remove parts that 
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

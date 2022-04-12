@@ -9,15 +9,19 @@
 #include <CodeAnalysis/sourceannotations.h>
 #include <string>
 #include "Player.cpp"
-
+#include <chrono>
+#include <thread>
 
 
 
 using namespace std;
+using namespace std::literals;
+
 
 Player nullPlayer(-1);
 const int speed1 = 0;
 const int speed2 = 1;
+
 Player& Game::getPlayer(int id) {
     if (id == 1) { return player1; }
     else if (id == 2) { return player2; }
@@ -70,7 +74,7 @@ void Game::fire(Player& playerBeingAttacked, int attackX, int attackY) {
 //two gamemode's
 //1 = human vs cpu
 //2 = cpu vs cpu
-Game::Game() 
+Game::Game()
 {
     int gamemode;
     std::cout << border;
@@ -119,10 +123,7 @@ Game::Game()
                 std::cout << "End Location (ie: a6): ";
                 std::cin >> endLoc;
 
-                x1 = std::stoi(startLoc.substr(0, 1));
-                y1 = std::stoi(startLoc.substr(1, 1));
-                x2 = std::stoi(endLoc.substr(0, 1));
-                y2 = std::stoi(endLoc.substr(1, 1));
+                
 
                 //place ship
                 player1.getBoard().setShip(shipNumber, x1, y1, x2, y2);
@@ -133,8 +134,8 @@ Game::Game()
     }
     //computer player
     else {
-        srand(static_cast<unsigned int>(time(NULL)));
-        usleep(1);
+        rand(static_cast<unsigned int>(time(NULL)));
+        ;
         player1.getBoard().randomizeFleet();
         std::cout << "CPU Player: Ships Randomly Placed\n";
         std::cout << border;
@@ -162,8 +163,6 @@ Game::Game()
                 std::cout << border;
                 std::cout << "Enter coordinate to attack (ie: a3)\n: ";
                 std::cin >> attackCoord;
-                x1 = (int)attackCoord[0] - 97;
-                y1 = (int)attackCoord[1] - 48;
                 if (x1 >= 0 && y1 >= 0 && x1 < BOARD_SIZE && y1 < BOARD_SIZE && !nextPlayer.getBoard()(x1, y1).getFiredUpon()) {
                     fire(nextPlayer, x1, y1);
                     std::cout << border;
@@ -218,7 +217,7 @@ Game::Game()
             p2RandomCoords[i] = i;
         }
 
-        srand(static_cast<unsigned int>(time(NULL)));
+        rand(static_cast<unsigned int>(time(NULL)));
 
         for (int k = 0; k < BOARD_SIZE * BOARD_SIZE * BOARD_SIZE; k++) {
             tmpRandNumber1 = rand() % 100;
@@ -262,18 +261,18 @@ Game::Game()
             //take turns
             std::cout << "Player " << currPlayer.getID() << "'s turn.....\n";
             //quick pause (as if cpu is thinking)
-            sleep(speed1);
+            
             std::cout << border;
             std::cout << "Attacking player " << nextPlayer.getID() << "\nCoordinate's being attacked: (" << attackX << ',' << attackY << ")\n";
-            sleep(speed1);
+            
             fire(nextPlayer, attackX, attackY);
             std::cout << "Attack Successful\n";
             std::cout << border;
             //print boards
-            sleep(speed1);
+           ;
             std::cout << "Printing player 1's board:\n";
             std::cout << border;
-            sleep(speed2);
+            
             //print player 1's board
             std::cout << "Player 1's board\n";
             std::cout << border;
@@ -281,13 +280,13 @@ Game::Game()
             else { nextPlayer.getBoard().printBoard(); }
             std::cout << "Printing player 2's board:\n";
             std::cout << border;
-            sleep(speed2);
+            
             //print player 2's board
             std::cout << "Player 2's board\n";
             std::cout << border;
             if (currPlayer.getID() == 2) { currPlayer.getBoard().printBoard(); }
             else { nextPlayer.getBoard().printBoard(); }
-            sleep(speed1);
+           
             //swap players on successful fire
             tmpPlayer = currPlayer;
             currPlayer = nextPlayer;
@@ -310,4 +309,8 @@ Game::Game()
             }
         } while (again != 'y' || again != 'n');
     }
+}
+
+void Game::run()
+{
 }

@@ -1,9 +1,9 @@
 #include <cstdio>
 #include "battleship.h"
 //#include "Board.h"
-//#include "Ship.h"
+#include "Ship.h"
 //#include "Game.h"
-//#include <ctime>
+#include <ctime>
 
 Board::Board(const Board& rhs) {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -24,7 +24,7 @@ void Board::printBoard() {
     std::cout << border;
     std::cout << "   ";
     for (int i = 0; i < BOARD_SIZE; i++) {
-        std::cout << '|' << alphabet[i] << "|";
+        std::cout << '|' << alphabet; i << "|";
         if (i != BOARD_SIZE - 1) { std::cout << ' '; }
     }
     std::cout << "\n";
@@ -195,7 +195,7 @@ void Board::setShip(int shipNumber, int x1, int y1, int x2, int y2) {
 }
 
 void Board::randomizeFleet() {
-    srand(static_cast<unsigned int>(time(NULL)));
+    rand(static_cast<unsigned int>(time(NULL)));
     for (int i = 0; i < numOfShips; i++) {
         int startX = rand() % BOARD_SIZE;
         int startY = rand() % BOARD_SIZE;
