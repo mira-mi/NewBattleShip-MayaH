@@ -8,9 +8,11 @@
 #include "Game.cpp"
 #include "NewBattleShip-MayaH.h"
 
+
 int main()
 {
-    Game();
+
+   Game();
     return 0;
 }
 

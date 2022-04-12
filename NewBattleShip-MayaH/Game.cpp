@@ -22,6 +22,10 @@ Player nullPlayer(-1);
 const int speed1 = 0;
 const int speed2 = 1;
 
+void Game::Run()
+{
+}
+
 Player& Game::getPlayer(int id) {
     if (id == 1) { return player1; }
     else if (id == 2) { return player2; }
@@ -72,9 +76,11 @@ void Game::fire(Player& playerBeingAttacked, int attackX, int attackY) {
 }
 
 
-Game::Game(Player& p1, Player& p2)
-{
+Game::Game(Player& p1, Player& p2) : player1(p1), player2(p2) {
+
     int gamemode;
+    Game::player1;
+    Game::player2;
     std::cout << border;
     std::cout << "Gamemodes:\n1. Player vs. CPU\n2. CPU vs. CPU\n";
     std::cout << border;

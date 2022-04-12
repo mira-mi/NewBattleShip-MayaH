@@ -4,6 +4,7 @@
 #include "Ship.h"
 //#include "Game.h"
 #include <ctime>
+#include <iostream>
 
 Board::Board(const Board& rhs) {
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -24,7 +25,7 @@ void Board::printBoard() {
     std::cout << border;
     std::cout << "   ";
     for (int i = 0; i < BOARD_SIZE; i++) {
-        std::cout << '|' << alphabet; i << "|";
+       
         if (i != BOARD_SIZE - 1) { std::cout << ' '; }
     }
     std::cout << "\n";
@@ -239,4 +240,3 @@ void Board::printRemainingShips() {
         }
     }
 }
-Ship.h:
