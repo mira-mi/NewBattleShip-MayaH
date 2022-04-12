@@ -72,7 +72,7 @@ void Game::fire(Player& playerBeingAttacked, int attackX, int attackY) {
 }
 
 
-Game::Game()
+Game::Game(Player& p1, Player& p2)
 {
     int gamemode;
     std::cout << border;
