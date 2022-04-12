@@ -71,9 +71,7 @@ void Game::fire(Player& playerBeingAttacked, int attackX, int attackY) {
     }
 }
 
-//two gamemode's
-//1 = human vs cpu
-//2 = cpu vs cpu
+
 Game::Game()
 {
     int gamemode;
